@@ -2,7 +2,7 @@ package br.com.quasar.android.helper;
 
 public class BaseModel {
 
-	private int id;
+	private Integer id;
 
 	public BaseModel() {
 	}
@@ -11,8 +11,12 @@ public class BaseModel {
 		id = model.getId();
 	}
 
-	public int getId() {
+	public Integer getId() {
 		return id;
+	}
+
+	public void setId(Integer id) {
+		this.id = id;
 	}
 
 	@Override
@@ -42,9 +46,4 @@ public class BaseModel {
 			return false;
 		return true;
 	}
-
-	public static boolean getBoolean(String str) {
-		return Boolean.parseBoolean(str);
-	}
-
 }

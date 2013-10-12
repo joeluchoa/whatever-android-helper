@@ -2,6 +2,7 @@ package br.com.quasar.android.helper;
 
 import java.lang.reflect.Type;
 
+import com.google.gson.FieldNamingPolicy;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonDeserializationContext;
@@ -18,14 +19,9 @@ public class QuasarJsonHelper {
 
 	private static QuasarJsonHelper sInstance;
 
-	private GsonBuilder builder;
+	private Class<?>[] models;
 
 	private QuasarJsonHelper() {
-		builder = new GsonBuilder();
-
-		builder.setDateFormat(DEFAULT_DATE_FORMAT);
-
-		// TODO
 	}
 
 	public static QuasarJsonHelper getInstance() {
@@ -36,25 +32,76 @@ public class QuasarJsonHelper {
 	}
 
 	public Gson build() {
-		return builder.create();
+		return build(null);
 	}
 
-	JsonSerializer<BaseModel> ser = new JsonSerializer<BaseModel>() {
+	public Gson build(Class<?> toExclude) {
+		GsonBuilder b = new GsonBuilder();
+		b.setDateFormat(DEFAULT_DATE_FORMAT);
+		b.setFieldNamingPolicy(FieldNamingPolicy.UPPER_CAMEL_CASE);
+		for (Class<?> cls : models) {
+			if (!cls.equals(toExclude)) {
+				b.registerTypeAdapter(cls, new ModelAdapter<BaseModel>(cls));
+			}
+		}
+		return b.serializeNulls().create();
+	}
+
+	public void setAdapterforModel(Class<?>[] models) {
+		this.models = models;
+	}
+
+	static class ModelAdapter<T extends BaseModel> implements
+			JsonSerializer<T>, JsonDeserializer<T> {
+
+		private Class<?> mClass;
+
+		public ModelAdapter(Class<?> cls) {
+			mClass = cls;
+		}
 
 		@Override
-		public JsonElement serialize(BaseModel src, Type typeOfSrc,
+		public T deserialize(JsonElement json, Type typeOfT,
+				JsonDeserializationContext context) throws JsonParseException {
+			if (json == null) {
+				return null;
+			}
+
+			try {
+				@SuppressWarnings("unchecked")
+				T result = (T) mClass.newInstance();
+				result.setId(json.getAsInt());
+				return result;
+			} catch (InstantiationException e) {
+				e.printStackTrace();
+			} catch (IllegalAccessException e) {
+				e.printStackTrace();
+			}
+			return null;
+		}
+
+		@Override
+		public JsonElement serialize(T src, Type typeOfSrc,
 				JsonSerializationContext context) {
 			return src == null ? null : new JsonPrimitive(src.getId());
 		}
-	};
 
-	JsonDeserializer<BaseModel> deser = new JsonDeserializer<BaseModel>() {
+	}
+
+	static class BooleanAdapter implements JsonSerializer<Boolean>,
+			JsonDeserializer<Boolean> {
+
 		@Override
-		public BaseModel deserialize(JsonElement json, Type typeOfT,
+		public Boolean deserialize(JsonElement src, Type typeOfT,
 				JsonDeserializationContext context) throws JsonParseException {
-			// TODO get Class<?>
-			return json == null ? null : null;
+			return Boolean.parseBoolean(src.getAsString());
 		}
-	};
 
+		@Override
+		public JsonElement serialize(Boolean src, Type typeOfSrc,
+				JsonSerializationContext context) {
+			return src == null ? null : new JsonPrimitive(src.booleanValue());
+		}
+
+	}
 }
