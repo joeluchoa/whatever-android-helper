@@ -7,8 +7,8 @@ import com.google.gson.annotations.SerializedName;
 
 public class Test {
 
-	static class A extends BaseModel {
-		String name;
+	public static class A extends BaseModel {
+		private String name;
 
 		public String getName() {
 			return name;
@@ -19,10 +19,10 @@ public class Test {
 		}
 	}
 
-	static class B extends BaseModel {
-		Boolean ok;
+	public static class B extends BaseModel {
+		private Boolean ok;
 		@SerializedName("LocalInspecaoId")
-		A a;
+		private A a;
 
 		public Boolean isOk() {
 			return ok;
@@ -51,6 +51,8 @@ public class Test {
 		a.setName("Joel");
 		B b = new B();
 		b.setA(a);
+		b.setId(2);
+		b.setOk(true);
 
 		Class<?>[] models = { A.class, B.class };
 
@@ -58,7 +60,11 @@ public class Test {
 
 		helper.setAdapterforModel(models);
 
+		B bb = helper.build(B.class).fromJson(helper.build(B.class).toJson(b),
+				B.class);
+
 		System.out.println(helper.build(A.class).toJson(a));
 		System.out.println(helper.build(B.class).toJson(b));
+		System.out.println(helper.build(B.class).toJson(bb));
 	}
 }

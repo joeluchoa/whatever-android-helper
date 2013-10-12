@@ -31,11 +31,11 @@ public class QuasarJsonHelper {
 		return sInstance;
 	}
 
-	public Gson build() {
-		return build(null);
+	public GsonBuilder getBuilder() {
+		return getBuilder(null);
 	}
 
-	public Gson build(Class<?> toExclude) {
+	public GsonBuilder getBuilder(Class<?> toExclude) {
 		GsonBuilder b = new GsonBuilder();
 		b.setDateFormat(DEFAULT_DATE_FORMAT);
 		b.setFieldNamingPolicy(FieldNamingPolicy.UPPER_CAMEL_CASE);
@@ -44,7 +44,15 @@ public class QuasarJsonHelper {
 				b.registerTypeAdapter(cls, new ModelAdapter<BaseModel>(cls));
 			}
 		}
-		return b.serializeNulls().create();
+		return b.serializeNulls();
+	}
+
+	public Gson build() {
+		return build(null);
+	}
+
+	public Gson build(Class<?> toExclude) {
+		return getBuilder(toExclude).create();
 	}
 
 	public void setAdapterforModel(Class<?>[] models) {
@@ -84,23 +92,6 @@ public class QuasarJsonHelper {
 		public JsonElement serialize(T src, Type typeOfSrc,
 				JsonSerializationContext context) {
 			return src == null ? null : new JsonPrimitive(src.getId());
-		}
-
-	}
-
-	static class BooleanAdapter implements JsonSerializer<Boolean>,
-			JsonDeserializer<Boolean> {
-
-		@Override
-		public Boolean deserialize(JsonElement src, Type typeOfT,
-				JsonDeserializationContext context) throws JsonParseException {
-			return Boolean.parseBoolean(src.getAsString());
-		}
-
-		@Override
-		public JsonElement serialize(Boolean src, Type typeOfSrc,
-				JsonSerializationContext context) {
-			return src == null ? null : new JsonPrimitive(src.booleanValue());
 		}
 
 	}

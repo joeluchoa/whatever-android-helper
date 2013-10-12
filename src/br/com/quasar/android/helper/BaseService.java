@@ -77,23 +77,11 @@ public class BaseService<T extends BaseModel> {
 		return null;
 	}
 
-	public static int getInteger(String str) {
-		try {
-			return Integer.parseInt(str);
-		} catch (Exception e) {
-			return 0;
-		}
-	}
-
-	public Dao<T, Integer> getDao() {
-		return dao;
-	}
-
-	public Set<Integer> getAllIds() {
+	public Set<Integer> getAll(String... columns) {
 		Set<Integer> ids = new HashSet<Integer>();
 		try {
 			QueryBuilder<T, Integer> b = dao.queryBuilder();
-			PreparedQuery<T> q = b.selectColumns("id").prepare();
+			PreparedQuery<T> q = b.selectColumns(columns).prepare();
 			List<T> list = dao.query(q);
 			for (T m : list) {
 				ids.add(m.getId());
@@ -102,5 +90,9 @@ public class BaseService<T extends BaseModel> {
 			e.printStackTrace();
 		}
 		return ids;
+	}
+
+	public Dao<T, Integer> getDao() {
+		return dao;
 	}
 }
