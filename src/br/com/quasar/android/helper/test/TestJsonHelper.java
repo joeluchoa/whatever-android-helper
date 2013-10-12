@@ -1,11 +1,11 @@
 package br.com.quasar.android.helper.test;
 
-import br.com.quasar.android.helper.BaseModel;
-import br.com.quasar.android.helper.QuasarJsonHelper;
+import br.com.quasar.android.helper.db.BaseModel;
+import br.com.quasar.android.helper.json.QuasarJsonHelper;
 
 import com.google.gson.annotations.SerializedName;
 
-public class Test {
+public class TestJsonHelper {
 
 	public static class A extends BaseModel {
 		private String name;
@@ -56,9 +56,9 @@ public class Test {
 
 		Class<?>[] models = { A.class, B.class };
 
-		QuasarJsonHelper helper = QuasarJsonHelper.getInstance();
+		QuasarJsonHelper helper = new QuasarJsonHelper();
 
-		helper.setAdapterforModel(models);
+		helper.setAdapterforModels(models);
 
 		B bb = helper.build(B.class).fromJson(helper.build(B.class).toJson(b),
 				B.class);

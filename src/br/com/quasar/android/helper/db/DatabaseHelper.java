@@ -1,10 +1,11 @@
-package br.com.quasar.android.helper;
+package br.com.quasar.android.helper.db;
 
 import java.sql.SQLException;
 
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
+import br.com.quasar.android.helper.json.QuasarJsonHelper;
 
 import com.j256.ormlite.android.apptools.OrmLiteSqliteOpenHelper;
 import com.j256.ormlite.dao.Dao;
@@ -16,11 +17,14 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
 	private static final String TAG = DatabaseHelper.class.getSimpleName();
 
 	private Class<?>[] dbTables = null;
+	private QuasarJsonHelper jsonHelper;
 
 	public DatabaseHelper(Context context, String dbName, int dbVersion,
 			Class<?>[] dbTables) {
 		super(context, dbName, null, dbVersion);
 		this.dbTables = dbTables;
+		this.jsonHelper = new QuasarJsonHelper();
+		this.jsonHelper.setAdapterforModels(dbTables);
 	}
 
 	@Override
@@ -67,5 +71,9 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
 			Log.e(TAG, "Error to get DAO for class " + cls.getSimpleName(), e);
 		}
 		return null;
+	}
+
+	public QuasarJsonHelper getJsonHelper() {
+		return jsonHelper;
 	}
 }

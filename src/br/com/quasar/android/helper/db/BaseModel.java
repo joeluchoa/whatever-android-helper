@@ -1,4 +1,4 @@
-package br.com.quasar.android.helper;
+package br.com.quasar.android.helper.db;
 
 public class BaseModel {
 

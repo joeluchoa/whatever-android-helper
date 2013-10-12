@@ -1,11 +1,11 @@
-package br.com.quasar.android.helper;
+package br.com.quasar.android.helper.db;
 
 import java.sql.SQLException;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import org.json.JSONObject;
+import br.com.quasar.android.helper.json.QuasarJsonHelper;
 
 import com.j256.ormlite.dao.Dao;
 import com.j256.ormlite.dao.Dao.CreateOrUpdateStatus;
@@ -16,16 +16,17 @@ public class BaseService<T extends BaseModel> {
 
 	private Dao<T, Integer> dao;
 	private Class<T> cls;
+	private QuasarJsonHelper jsonHelper;
 
-	public BaseService(DatabaseHelper helper, Class<T> cls) {
+	public BaseService(DatabaseHelper dbHelper, Class<T> cls) {
 		this.cls = cls;
-		this.dao = helper.getModelDao(cls);
+		this.dao = dbHelper.getModelDao(cls);
+		this.jsonHelper = dbHelper.getJsonHelper();
 	}
 
-	public CreateOrUpdateStatus save(JSONObject json) {
+	public CreateOrUpdateStatus save(String json) {
 		try {
-			T model = cls.newInstance();
-			// TODO load model
+			T model = jsonHelper.build(cls).fromJson(json, cls);
 			return save(model);
 		} catch (Exception e) {
 			e.printStackTrace();

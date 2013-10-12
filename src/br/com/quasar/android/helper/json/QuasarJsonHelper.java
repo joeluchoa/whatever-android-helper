@@ -1,6 +1,8 @@
-package br.com.quasar.android.helper;
+package br.com.quasar.android.helper.json;
 
 import java.lang.reflect.Type;
+
+import br.com.quasar.android.helper.db.BaseModel;
 
 import com.google.gson.FieldNamingPolicy;
 import com.google.gson.Gson;
@@ -17,19 +19,7 @@ public class QuasarJsonHelper {
 
 	public static final String DEFAULT_DATE_FORMAT = "yyyy-MM-dd'T'hh:mm:ss";
 
-	private static QuasarJsonHelper sInstance;
-
 	private Class<?>[] models;
-
-	private QuasarJsonHelper() {
-	}
-
-	public static QuasarJsonHelper getInstance() {
-		if (sInstance == null) {
-			sInstance = new QuasarJsonHelper();
-		}
-		return sInstance;
-	}
 
 	public GsonBuilder getBuilder() {
 		return getBuilder(null);
@@ -55,7 +45,7 @@ public class QuasarJsonHelper {
 		return getBuilder(toExclude).create();
 	}
 
-	public void setAdapterforModel(Class<?>[] models) {
+	public void setAdapterforModels(Class<?>[] models) {
 		this.models = models;
 	}
 
