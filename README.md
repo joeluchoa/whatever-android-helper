@@ -1,2 +1,2 @@
-quasar-android-helper
+WhateverAndroidHelper
 =====================

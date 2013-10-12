@@ -1,13 +1,13 @@
-package br.com.quasar.android.helper.test;
+package br.com.whatever.android.helper.test;
 
-import br.com.quasar.android.helper.db.BaseModel;
-import br.com.quasar.android.helper.json.QuasarJsonHelper;
+import br.com.whatever.android.helper.db.WhateverDbModel;
+import br.com.whatever.android.helper.json.WhateverJsonHelper;
 
 import com.google.gson.annotations.SerializedName;
 
 public class TestJsonHelper {
 
-	public static class A extends BaseModel {
+	public static class A extends WhateverDbModel {
 		private String name;
 
 		public String getName() {
@@ -19,7 +19,7 @@ public class TestJsonHelper {
 		}
 	}
 
-	public static class B extends BaseModel {
+	public static class B extends WhateverDbModel {
 		private Boolean ok;
 		@SerializedName("LocalInspecaoId")
 		private A a;
@@ -56,7 +56,7 @@ public class TestJsonHelper {
 
 		Class<?>[] models = { A.class, B.class };
 
-		QuasarJsonHelper helper = new QuasarJsonHelper();
+		WhateverJsonHelper helper = new WhateverJsonHelper();
 
 		helper.setAdapterforModels(models);
 

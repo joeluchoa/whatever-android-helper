@@ -1,13 +1,13 @@
-package br.com.quasar.android.helper.db;
+package br.com.whatever.android.helper.db;
 
-public class BaseModel {
+public class WhateverDbModel {
 
 	private Integer id;
 
-	public BaseModel() {
+	public WhateverDbModel() {
 	}
 
-	public BaseModel(BaseModel model) {
+	public WhateverDbModel(WhateverDbModel model) {
 		id = model.getId();
 	}
 
@@ -39,7 +39,7 @@ public class BaseModel {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		BaseModel other = (BaseModel) obj;
+		WhateverDbModel other = (WhateverDbModel) obj;
 		if (getId() != other.getId())
 			return false;
 		else if (!this.getClass().getName().equals(other.getClass().getName()))

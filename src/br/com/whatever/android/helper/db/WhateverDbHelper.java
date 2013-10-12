@@ -1,29 +1,29 @@
-package br.com.quasar.android.helper.db;
+package br.com.whatever.android.helper.db;
 
 import java.sql.SQLException;
 
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
-import br.com.quasar.android.helper.json.QuasarJsonHelper;
+import br.com.whatever.android.helper.json.WhateverJsonHelper;
 
 import com.j256.ormlite.android.apptools.OrmLiteSqliteOpenHelper;
 import com.j256.ormlite.dao.Dao;
 import com.j256.ormlite.support.ConnectionSource;
 import com.j256.ormlite.table.TableUtils;
 
-public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
+public class WhateverDbHelper extends OrmLiteSqliteOpenHelper {
 
-	private static final String TAG = DatabaseHelper.class.getSimpleName();
+	private static final String TAG = WhateverDbHelper.class.getSimpleName();
 
 	private Class<?>[] dbTables = null;
-	private QuasarJsonHelper jsonHelper;
+	private WhateverJsonHelper jsonHelper;
 
-	public DatabaseHelper(Context context, String dbName, int dbVersion,
+	public WhateverDbHelper(Context context, String dbName, int dbVersion,
 			Class<?>[] dbTables) {
 		super(context, dbName, null, dbVersion);
 		this.dbTables = dbTables;
-		this.jsonHelper = new QuasarJsonHelper();
+		this.jsonHelper = new WhateverJsonHelper();
 		this.jsonHelper.setAdapterforModels(dbTables);
 	}
 
@@ -73,7 +73,7 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
 		return null;
 	}
 
-	public QuasarJsonHelper getJsonHelper() {
+	public WhateverJsonHelper getJsonHelper() {
 		return jsonHelper;
 	}
 }

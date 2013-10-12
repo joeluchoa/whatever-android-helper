@@ -1,24 +1,24 @@
-package br.com.quasar.android.helper.db;
+package br.com.whatever.android.helper.db;
 
 import java.sql.SQLException;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import br.com.quasar.android.helper.json.QuasarJsonHelper;
+import br.com.whatever.android.helper.json.WhateverJsonHelper;
 
 import com.j256.ormlite.dao.Dao;
 import com.j256.ormlite.dao.Dao.CreateOrUpdateStatus;
 import com.j256.ormlite.stmt.PreparedQuery;
 import com.j256.ormlite.stmt.QueryBuilder;
 
-public class BaseService<T extends BaseModel> {
+public class WhateverDbService<T extends WhateverDbModel> {
 
 	private Dao<T, Integer> dao;
 	private Class<T> cls;
-	private QuasarJsonHelper jsonHelper;
+	private WhateverJsonHelper jsonHelper;
 
-	public BaseService(DatabaseHelper dbHelper, Class<T> cls) {
+	public WhateverDbService(WhateverDbHelper dbHelper, Class<T> cls) {
 		this.cls = cls;
 		this.dao = dbHelper.getModelDao(cls);
 		this.jsonHelper = dbHelper.getJsonHelper();
