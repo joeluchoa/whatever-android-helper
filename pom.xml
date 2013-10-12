@@ -9,11 +9,11 @@
   <name>WhateverAndroidHelper</name>
 
   <dependencies>
-    <!-- Android API 16 -->
+    <!-- Android API 14 -->
     <dependency>
       <groupId>com.google.android</groupId>
       <artifactId>android</artifactId>
-      <version>4.1.1.4</version>
+      <version>4.0.1.2</version>
       <scope>provided</scope>
     </dependency>
 
@@ -62,8 +62,8 @@
         <artifactId>android-maven-plugin</artifactId>
         <configuration>
           <sdk>
-            <!-- api level 16 = platform 4.1 -->
-            <platform>16</platform>
+            <!-- api level 14 = platform 4.0 -->
+            <platform>14</platform>
           </sdk>
         </configuration>
       </plugin>
