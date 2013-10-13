@@ -23,6 +23,7 @@ public class TestJsonHelper {
 		private Boolean ok;
 		@SerializedName("LocalInspecaoId")
 		private A a;
+		public final String imagemMimeType = "image/png";
 
 		public Boolean isOk() {
 			return ok;

@@ -1,9 +1,8 @@
 package br.com.whatever.android.helper.db;
 
 import java.sql.SQLException;
-import java.util.HashSet;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
 
 import br.com.whatever.android.helper.json.WhateverJsonHelper;
 
@@ -75,22 +74,27 @@ public class WhateverDbService<T extends WhateverDbModel> {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		return null;
+		return new ArrayList<T>();
 	}
 
-	public Set<Integer> getAll(String... columns) {
-		Set<Integer> ids = new HashSet<Integer>();
+	public List<T> getAll(String... columns) {
+		List<T> list = new ArrayList<T>();
 		try {
 			QueryBuilder<T, Integer> b = dao.queryBuilder();
 			PreparedQuery<T> q = b.selectColumns(columns).prepare();
-			List<T> list = dao.query(q);
-			for (T m : list) {
-				ids.add(m.getId());
-			}
+			list = dao.query(q);
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		return ids;
+		return list;
+	}
+
+	public void removeAll() {
+		try {
+			dao.delete(getAll());
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 	}
 
 	public Dao<T, Integer> getDao() {
