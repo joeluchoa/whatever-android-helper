@@ -23,10 +23,11 @@ public class WhateverDbService<T extends WhateverDbModel> {
 		this.jsonHelper = dbHelper.getJsonHelper();
 	}
 
-	public CreateOrUpdateStatus save(String json) {
+	public T save(String json) {
 		try {
 			T model = jsonHelper.build(cls).fromJson(json, cls);
-			return save(model);
+			save(model);
+			return model;
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -91,7 +92,9 @@ public class WhateverDbService<T extends WhateverDbModel> {
 
 	public void removeAll() {
 		try {
-			dao.delete(getAll());
+			for (T m : getAll()) {
+				dao.delete(m);
+			}
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}

@@ -2,21 +2,14 @@ package br.com.whatever.android.helper.db;
 
 public class WhateverDbModel {
 
-	private Integer id;
-
 	public WhateverDbModel() {
 	}
 
-	public WhateverDbModel(WhateverDbModel model) {
-		id = model.getId();
-	}
-
 	public Integer getId() {
-		return id;
+		return 0;
 	}
 
 	public void setId(Integer id) {
-		this.id = id;
 	}
 
 	@Override

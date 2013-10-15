@@ -39,12 +39,12 @@ public class WhateverDbHelper extends OrmLiteSqliteOpenHelper {
 		resetDatabase(connectionSource);
 	}
 
-	public void resetDatabase(ConnectionSource connectionSource) {
+	protected void resetDatabase(ConnectionSource connectionSource) {
 		dropAllTables(connectionSource);
 		createAllTables(connectionSource);
 	}
 
-	private void createAllTables(ConnectionSource connectionSource) {
+	protected void createAllTables(ConnectionSource connectionSource) {
 		try {
 			for (Class<?> table : dbTables) {
 				TableUtils.createTable(connectionSource, table);
@@ -54,7 +54,7 @@ public class WhateverDbHelper extends OrmLiteSqliteOpenHelper {
 		}
 	}
 
-	private void dropAllTables(ConnectionSource connectionSource) {
+	protected void dropAllTables(ConnectionSource connectionSource) {
 		try {
 			for (Class<?> table : dbTables) {
 				TableUtils.dropTable(connectionSource, table, true);
