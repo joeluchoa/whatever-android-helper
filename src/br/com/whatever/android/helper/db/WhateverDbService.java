@@ -90,6 +90,16 @@ public class WhateverDbService<T extends WhateverDbModel> {
 		return list;
 	}
 
+	public List<T> findBy(String column, Object value) {
+		List<T> list = new ArrayList<T>();
+		try {
+			list = dao.queryForEq(column, value);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return list;
+	}
+
 	public void removeAll() {
 		try {
 			for (T m : getAll()) {
